@@ -29,12 +29,16 @@ app.use(function (err, req, res, next) {
 })
 
 //rutas
+const rProducts = require('./routes/products.js')
+app.use('/api/productos', rProducts)
+
 app.get('/', (req, res) => {
     res.render('./pages/index', { title: 'SimCompras - API ' })
 })
 
-const rProducts = require('./routes/products.js')
-app.use('/api/productos', rProducts)
+app.get('/*', (req, res) => {
+    res.status(404).json({ error: -2, descripcion: `ruta [${req.url}] método [${req.method}] no implementada` })
+})
 
 //server
 const _port = process.env.port || 8080

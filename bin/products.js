@@ -26,9 +26,9 @@ class Products {
         }
     }
 
-    async #deleteFile(file) {
+    async #deleteFile(filePath) {
         try {
-            const path = resolve('./public/images/' + file)
+            const path = resolve(filePath)
             await fs.unlinkSync(path)
             return { message: `exito al eliminar el archivo ${path}` }
         } catch (error) {
@@ -53,33 +53,79 @@ class Products {
         }
     }
 
-    #validateProduct(product) {
+    validateProduct(product) {
         //valida que el producto a agregar tenga los campos correctos.
-        let { title, price, thumbnail } = product
+        let { name, description, code, picture, price, stock } = product
 
-        // console.log(`title = ${title} ${typeof title}`)
-        // console.log(`price = ${price} ${typeof price}`)
-        // console.log(`thumbnail = ${thumbnail} ${typeof thumbnail}`)
+        if (process.env.debug) {
+            console.log(`name = ${name} ${typeof name}`)
+            console.log(`description = ${description} ${typeof description}`)
+            console.log(`code = ${code} ${typeof code}`)
+            console.log(`picture = ${picture} ${typeof picture}`)
+            console.log(`price = ${price} ${typeof price}`)
+            console.log(`stock = ${stock} ${typeof stock}`)
+        }
 
-        if (typeof product === 'undefined') { return false }
-        if (typeof title === 'undefined') { return false }
+        if (typeof name === 'undefined') { return false }
+        if (typeof description === 'undefined') { return false }
+        if (typeof code === 'undefined') { return false }
+        if (typeof picture === 'undefined') { return false }
         if (typeof price === 'undefined') { return false }
-        if (typeof thumbnail === 'undefined') { return false }
+        if (typeof stock === 'undefined') { return false }
 
-        if (!product.hasOwnProperty('title')) { return false }
+        if (!product.hasOwnProperty('name')) { return false }
+        if (!product.hasOwnProperty('description')) { return false }
+        if (!product.hasOwnProperty('code')) { return false }
+        if (!product.hasOwnProperty('picture')) { return false }
         if (!product.hasOwnProperty('price')) { return false }
-        if (!product.hasOwnProperty('thumbnail')) { return false }
+        if (!product.hasOwnProperty('stock')) { return false }
 
-        if (!(typeof title === 'string')) { return false }
+        if (!(typeof name === 'string')) { return false }
+        if (!(typeof description === 'string')) { return false }
+        if (!(typeof code === 'string')) { return false }
+        if (!(typeof picture === 'string')) { return false }
         if (!(typeof price === 'number')) { return false }
-        if (!(typeof thumbnail === 'string')) { return false }
+        if (!(typeof stock === 'number')) { return false }
 
-        if (title === '') { return false }
-        if (isNaN(price)) { return false }
+        if (name === null) { return false }
+        if (description === null) { return false }
+        if (code === null) { return false }
+        if (picture === null) { return false }
         if (price === null) { return false }
-        if (thumbnail === '') { return false }
+        if (stock === null) { return false }
+
+        if (name === '') { return false }
+        if (description === '') { return false }
+        if (code === '') { return false }
+        if (picture === '') { return false }
+        if (price === '') { return false }
+        if (stock === '') { return false }
+
+        if (isNaN(price)) { return false }
+        if (isNaN(stock)) { return false }
 
         return true
+    }
+
+    timeStamp() {
+        const newDate = new Date()
+        const daySeparator = '-'
+        const hourSeparator = ':'
+
+        let year = newDate.getFullYear()
+        let month = newDate.getMonth() + 1
+        month = (month < 10) ? `0${month}` : month
+        let day = newDate.getDate()
+        day = (day < 10) ? `0${day}` : day
+
+        let hour = newDate.getHours()
+        hour = (hour < 10) ? '0' + hour : hour
+        let minute = newDate.getMinutes()
+        minute = (minute < 10) ? '0' + minute : minute
+        let second = newDate.getSeconds()
+        second = (second.toFixed() < 10) ? '0' + second : second
+
+        return `${year}${daySeparator}${month}${daySeparator}${day} ${hour}${hourSeparator}${minute}${hourSeparator}${second}`
     }
 
     async getAll() {
@@ -131,8 +177,9 @@ class Products {
     async add(newProduct) {
         try {
             newProduct.price = parseFloat(newProduct.price)
+            newProduct.stock = parseInt(newProduct.stock)
 
-            if (!this.#validateProduct(newProduct)) {
+            if (!this.validateProduct(newProduct)) {
                 return { status: 400, message: 'Producto invalido' }
             }
 
@@ -141,6 +188,7 @@ class Products {
             await this.#readFile()
                 .then(response => {
                     products = JSON.parse(response)
+                    newProduct.timestamp = this.timeStamp()
                     newProduct.id = this.#getMaxID(products)
                     products.push(newProduct)
 
@@ -165,9 +213,10 @@ class Products {
     async update(product) {
         try {
             product.id = parseInt(product.id)
+            product.stock = parseInt(product.stock)
             product.price = parseFloat(product.price)
 
-            if (!this.#validateProduct(product)) {
+            if (!this.validateProduct(product)) {
                 return { status: 400, message: 'Producto invalido' }
             }
 
@@ -205,6 +254,46 @@ class Products {
 
             if (!(typeof findProduct === 'undefined')) {
                 return product
+            } else {
+                return { status: 202, message: 'Producto no encontrado' }
+            }
+        } catch (error) {
+            throw error
+        }
+    }
+
+    async delete(id) {
+        try {
+            id = parseInt(id)
+
+            if (isNaN(id)) {
+                return { status: 400, message: 'ID invalido' }
+            }
+
+            let products = []
+            let deleteProducts = []
+            let findProduct = []
+
+            await this.#readFile()
+                .then(response => {
+                    products = JSON.parse(response)
+                    findProduct = products.find(p => p.id === id)
+
+                    if (!(typeof findProduct === 'undefined')) {
+                        deleteProducts = products.filter(p => p.id !== id)
+
+                        this.#writeFile(deleteProducts)
+                            .catch(error => {
+                                throw error
+                            })
+                    }
+                })
+                .catch(error => {
+                    throw error
+                })
+
+            if (!(typeof findProduct === 'undefined')) {
+                return findProduct
             } else {
                 return { status: 202, message: 'Producto no encontrado' }
             }

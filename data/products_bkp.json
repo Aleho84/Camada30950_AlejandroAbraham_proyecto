@@ -1,20 +1,32 @@
 [
   {
-    "title": "Escuadra",
-    "price": 123.45,
-    "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png",
+    "name": "Coca-Cola 1,75 Lt",
+    "description": "Gaseosa Coca-Cola Sabor Original 1,75 Lt",
+    "code": "7790895007217",
+    "picture": "https://static.cotodigital3.com.ar/sitios/fotos/full/00474700/00474726.jpg?3.0.136j",
+    "price": 218.8,
+    "stock": 24,
+    "timestamp": "2022-06-03 10:00:00",
     "id": 1
   },
   {
-    "title": "Calculadora",
-    "price": 234.56,
-    "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-256.png",
+    "name": "Alfajor TOFI",
+    "description": "Alfajor TOFI Chocolate Paquete 46 Gr 1 Unidad",
+    "code": "7790040116610",
+    "picture": "https://static.cotodigital3.com.ar/sitios/fotos/full/00471400/00471474.jpg?3.0.136j",
+    "price": 63.99,
+    "stock": 50,
+    "timestamp": "2022-06-03 10:00:00",
     "id": 2
   },
   {
-    "title": "Globo Terráqueo",
-    "price": 345.67,
-    "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png",
+    "name": "Gomitas Mogul",
+    "description": "Gomitas Mogul Frutales Paq 12 Grm",
+    "code": "7790580602000",
+    "picture": "https://static.cotodigital3.com.ar/sitios/fotos/full/00163500/00163570.jpg?3.0.136j",
+    "price": 50.49,
+    "stock": 100,
+    "timestamp": "2022-06-03 10:00:00",
     "id": 3
   }
 ]
