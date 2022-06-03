@@ -29,8 +29,14 @@ app.use(function (err, req, res, next) {
 })
 
 //rutas
-const rProducts = require('./routes/products.js')
-app.use('/api/productos', rProducts)
+const products_routes = require('./routes/products.js')
+app.use('/api/productos', products_routes)
+
+const carts_routes = require('./routes/carts.js')
+app.use('/api/carrito', carts_routes)
+
+const index_routes = require('./routes/index.js')
+app.use('/', index_routes)
 
 //server
 const _port = process.env.port || 8080

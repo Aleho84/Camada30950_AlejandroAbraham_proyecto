@@ -28,5 +28,25 @@
     "stock": 100,
     "timestamp": "2022-06-03 10:00:00",
     "id": 3
+  },
+  {
+    "name": "Jugo Ades de Naranja",
+    "description": "Jugo de Soja Ades Sabor Naranja 1 Lt",
+    "code": "7790895643836",
+    "picture": "https://static.cotodigital3.com.ar/sitios/fotos/full/00256100/00256111.jpg?3.0.136j",
+    "price": 189.29,
+    "stock": 20,
+    "timestamp": "2022-06-03 18:51:18",
+    "id": 4
+  },
+  {
+    "name": "Jugo Ades de Manzana",
+    "description": "Jugo de Soja Ades Sabor Manzana 1 Lt",
+    "code": "7790895643835",
+    "picture": "https://static.cotodigital3.com.ar/sitios/fotos/full/00256100/00256111.jpg?3.0.136j",
+    "price": 189.29,
+    "stock": 20,
+    "timestamp": "2022-06-03 18:50:23",
+    "id": 5
   }
 ]

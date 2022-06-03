@@ -1,93 +1,17 @@
-const { Router, response } = require('express')
+const { Router } = require('express')
 const router = Router()
 
-//cart class
-const Carts = require('../bin/carts.js')
-const carts = new Carts(process.env.cartFilePath, process.env.cartFileFormat)
-const adminUser = true
-
-//middlewares
-function isAdmin(req, res, next) {
-    if (process.env.debug) { console.log(`Admin User = ${adminUser}`) }
-
-    if (adminUser) {
-        next()
-    } else {
-        res.status(403).json({ error: -1, descripcion: `ruta [${req.baseUrl}] método [${req.method}] no autorizado` })
-    }
-}
+//controllers
+var auth = require('../controllers/auth.js')
+var misc = require('../controllers/misc.js')
+var carts_controller = require('../controllers/carts.js')
 
 //routes
-router.get('/', (req, res) => {
-    products.getAll()
-        .then(response => {
-            res.status(200).json(response)
-        })
-        .catch(error => {
-            res.status(500).json(error.message)
-        })
-})
-
-router.get('/:id', (req, res) => {
-    products.getById(req.params.id)
-        .then(response => {
-            res.status(200).json(response)
-        })
-        .catch(error => {
-            res.status(500).json(error.message)
-        })
-})
-
-router.post('/', isAdmin, (req, res) => {
-    let { name, description, code, picture, price, stock } = req.body
-    let newProduct = { name, description, code, picture, price, stock }
-
-    products.add(newProduct)
-        .then(response => {
-            if (typeof response.status === 'undefined') {
-                res.status(200).json(response)
-            } else {
-                res.status(response.status).json(response.message)
-            }
-        })
-        .catch(error => {
-            res.status(500).json(error.message)
-        })
-})
-
-router.put('/:id', isAdmin, (req, res) => {
-    let { name, description, code, picture, price, stock } = req.body
-    let id = req.params.id
-    let timestamp = products.timeStamp()
-    let updateProduct = { name, description, code, picture, price, stock, timestamp, id }
-
-    products.update(updateProduct)
-        .then(response => {
-            if (typeof response.status === 'undefined') {
-                res.status(200).json(response)
-            } else {
-                res.status(response.status).json(response.message)
-            }
-        })
-        .catch(error => {
-            res.status(500).json(error.message)
-        })
-})
-
-router.delete('/:id', isAdmin, (req, res) => {
-    let id = req.params.id
-
-    products.delete(id)
-        .then(response => {
-            if (typeof response.status === 'undefined') {
-                res.status(200).json(response)
-            } else {
-                res.status(response.status).json(response.message)
-            }
-        })
-        .catch(error => {
-            res.status(500).json(error.message)
-        })
-})
+router.post('/', carts_controller.post_cart)
+router.delete('/:id', carts_controller.delete_cart)
+router.get('/:id/productos', carts_controller.get_cart)
+router.post('/:id/productos', carts_controller.post_cart_addProduct)
+router.delete('/:id/productos/:id_prod', carts_controller.delete_cart_removeProduct)
+router.all('/*', misc.not_implemented)
 
 module.exports = router

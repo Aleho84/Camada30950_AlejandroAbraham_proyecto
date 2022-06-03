@@ -1,4 +1,4 @@
-const adminUser = false
+const adminUser = true
 
 exports.isAdmin = function (req, res, next) {
     if (process.env.debug) { console.log(`Admin User = ${adminUser}`) }

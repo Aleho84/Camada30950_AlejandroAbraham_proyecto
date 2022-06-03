@@ -2,15 +2,16 @@ const { Router } = require('express')
 const router = Router()
 
 //controllers
-var auth = require('../controllers/auth.js');
-var product_controller = require('../controllers/products.js');
+var auth = require('../controllers/auth.js')
+var misc = require('../controllers/misc.js')
+var products_controller = require('../controllers/products.js')
 
 //routes
-router.get('/', product_controller.get_products_all)
-router.get('/:id', product_controller.get_product_getById)
-router.post('/', auth.isAdmin, product_controller.post_product_add)
-router.put('/:id', auth.isAdmin, product_controller.put_product_update)
-router.delete('/:id', auth.isAdmin, product_controller.delete_product_byId)
-router.get('/*', product_controller.get_no_implemented)
+router.get('/', products_controller.get_products)
+router.get('/:id', products_controller.get_product)
+router.post('/', auth.isAdmin, products_controller.post_product)
+router.put('/:id', auth.isAdmin, products_controller.put_product)
+router.delete('/:id', auth.isAdmin, products_controller.delete_product)
+router.all('/*', misc.not_implemented)
 
 module.exports = router
