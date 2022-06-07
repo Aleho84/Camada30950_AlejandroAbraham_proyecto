@@ -1,22 +1,82 @@
 const Carts = require('../bin/carts.js')
-const carts = new Carts(process.env.cartFilePath, process.env.cartFileFormat)
+const carts = new Carts(process.env.cartFilePath, process.env.cartFileFormat, process.env.productFilePath, process.env.productFileFormat)
 
 exports.post_cart = function (req, res) {
-    res.status(404).json({ info: `[${req.baseUrl}] en desarrollo` })
+    carts.add()
+        .then(response => {
+            if (typeof response.status === 'undefined') {
+                res.status(200).json(response)
+            } else {
+                res.status(response.status).json(response.message)
+            }
+        })
+        .catch(error => {
+            res.status(500).json(error.message)
+        })
 }
 
 exports.delete_cart = function (req, res) {
-    res.status(404).json({ info: `[${req.baseUrl}] en desarrollo` })
+    let id = req.params.id
+
+    carts.delete(id)
+        .then(response => {
+            if (typeof response.status === 'undefined') {
+                res.status(200).json(response)
+            } else {
+                res.status(response.status).json(response.message)
+            }
+        })
+        .catch(error => {
+            res.status(500).json(error.message)
+        })
 }
 
-exports.get_cart = function (req, res) {
-    res.status(404).json({ info: `[${req.baseUrl}] en desarrollo` })
+exports.get_cartProducts = function (req, res) {
+    let id = req.params.id
+
+    carts.getCartProducts(id)
+        .then(response => {
+            if (typeof response.status === 'undefined') {
+                res.status(200).json(response)
+            } else {
+                res.status(response.status).json(response.message)
+            }
+        })
+        .catch(error => {
+            res.status(500).json(error.message)
+        })
 }
 
-exports.post_cart_addProduct = function (req, res) {
-    res.status(404).json({ info: `[${req.baseUrl}] en desarrollo` })
+exports.post_cartProduct = function (req, res) {
+    let id = req.params.id
+    let id_prod = req.params.id_prod
+
+    carts.postCartProducts(id, id_prod)
+        .then(response => {
+            if (typeof response.status === 'undefined') {
+                res.status(200).json(response)
+            } else {
+                res.status(response.status).json(response.message)
+            }
+        })
+        .catch(error => {
+            res.status(500).json(error.message)
+        })
 }
 
-exports.delete_cart_removeProduct = function (req, res) {
-    res.status(404).json({ info: `[${req.baseUrl}] en desarrollo` })
+exports.delete_cartProduct = function (req, res) {
+    let id = req.params.id
+    let id_prod = req.params.id_prod
+
+    carts.deleteCartProducts(id, id_prod)
+        .then(response => {
+            if (typeof response.status === 'undefined') {
+                res.status(200).json(response)
+            } else {
+                res.status(response.status).json(response.message)
+            }
+        })
+        .catch(error => {
+            res.status(500).json(error.message)
+        })
 }

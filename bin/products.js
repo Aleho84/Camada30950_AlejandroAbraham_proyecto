@@ -189,13 +189,10 @@ class Products {
                 .then(response => {
                     products = JSON.parse(response)
                     newProduct.timestamp = this.timeStamp()
-                    newProduct.id = this.#getMaxID(products)
+                    newProduct.id = (this.#getMaxID(products) === -Infinity) ? 1 : this.#getMaxID(products)
                     products.push(newProduct)
 
                     this.#writeFile(products)
-                        .then(response => {
-                            return newProduct
-                        })
                         .catch(error => {
                             throw error
                         })
