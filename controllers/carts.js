@@ -1,5 +1,5 @@
-const Carts = require('../bin/carts.js')
-const carts = new Carts(process.env.cartFilePath, process.env.cartFileFormat, process.env.productFilePath, process.env.productFileFormat)
+const Carts = require('../bin/carts_fs.js')
+const carts = new Carts(process.env.cartFilePath, process.env.productFilePath)
 
 exports.post_cart = function (req, res) {
     carts.add()
@@ -32,7 +32,7 @@ exports.delete_cart = function (req, res) {
 }
 
 exports.get_cartProducts = function (req, res) {
-    let id = req.params.id
+    let id = req.params.id   
 
     carts.getCartProducts(id)
         .then(response => {

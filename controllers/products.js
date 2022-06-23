@@ -1,6 +1,6 @@
 //product class
-const Products = require('../bin/products.js')
-const products = new Products(process.env.productFilePath, process.env.productFileFormat)
+const Products = require('../bin/products_fs.js')
+const products = new Products(process.env.productFilePath)
 
 exports.get_products = function (req, res) {
     products.getAll()
@@ -42,7 +42,7 @@ exports.post_product = function (req, res) {
 exports.put_product = function (req, res) {
     let { name, description, code, picture, price, stock } = req.body
     let id = req.params.id
-    let timestamp = products.timeStamp()
+    let timestamp = new Date().toISOString()
     let updateProduct = { name, description, code, picture, price, stock, timestamp, id }
 
     products.update(updateProduct)

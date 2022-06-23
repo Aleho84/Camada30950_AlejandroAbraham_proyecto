@@ -2,9 +2,9 @@ const fs = require('fs')
 const resolve = require('path').resolve
 
 class Products {
-    constructor(file, fileFormat) {
+    constructor(file) {
         this.file = file
-        this.fileFormat = fileFormat
+        this.fileFormat = 'utf-8'
     }
 
     async #writeFile(data) {
@@ -58,6 +58,7 @@ class Products {
         let { name, description, code, picture, price, stock } = product
 
         if (process.env.debug) {
+            console.log('VALIDANDO PRODUCTO')
             console.log(`name = ${name} ${typeof name}`)
             console.log(`description = ${description} ${typeof description}`)
             console.log(`code = ${code} ${typeof code}`)
@@ -105,27 +106,6 @@ class Products {
         if (isNaN(stock)) { return false }
 
         return true
-    }
-
-    timeStamp() {
-        const newDate = new Date()
-        const daySeparator = '-'
-        const hourSeparator = ':'
-
-        let year = newDate.getFullYear()
-        let month = newDate.getMonth() + 1
-        month = (month < 10) ? `0${month}` : month
-        let day = newDate.getDate()
-        day = (day < 10) ? `0${day}` : day
-
-        let hour = newDate.getHours()
-        hour = (hour < 10) ? '0' + hour : hour
-        let minute = newDate.getMinutes()
-        minute = (minute < 10) ? '0' + minute : minute
-        let second = newDate.getSeconds()
-        second = (second.toFixed() < 10) ? '0' + second : second
-
-        return `${year}${daySeparator}${month}${daySeparator}${day} ${hour}${hourSeparator}${minute}${hourSeparator}${second}`
     }
 
     async getAll() {
@@ -188,7 +168,7 @@ class Products {
             await this.#readFile()
                 .then(response => {
                     products = JSON.parse(response)
-                    newProduct.timestamp = this.timeStamp()
+                    newProduct.timestamp = new Date().toISOString()
                     newProduct.id = (this.#getMaxID(products) === -Infinity) ? 1 : this.#getMaxID(products)
                     products.push(newProduct)
 
@@ -227,7 +207,7 @@ class Products {
 
             await this.#readFile()
                 .then(response => {
-                    products = JSON.parse(response)
+                    products = JSON.parse(response)                    
                     findProduct = products.find(p => p.id === product.id)
 
                     if (!(typeof findProduct === 'undefined')) {
