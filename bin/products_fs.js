@@ -145,7 +145,7 @@ class Products {
                 })
 
             if (typeof product === 'undefined') {
-                return { status: 202, message: 'Producto no encontrado' }
+                return { status: 404, message: 'Producto no encontrado' }
             } else {
                 return product
             }
@@ -232,7 +232,7 @@ class Products {
             if (!(typeof findProduct === 'undefined')) {
                 return product
             } else {
-                return { status: 202, message: 'Producto no encontrado' }
+                return { status: 404, message: 'Producto no encontrado' }
             }
         } catch (error) {
             throw error
@@ -272,7 +272,7 @@ class Products {
             if (!(typeof findProduct === 'undefined')) {
                 return findProduct
             } else {
-                return { status: 202, message: 'Producto no encontrado' }
+                return { status: 404, message: 'Producto no encontrado' }
             }
         } catch (error) {
             throw error

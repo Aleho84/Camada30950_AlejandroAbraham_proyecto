@@ -125,7 +125,7 @@ class Carts {
             if (!(typeof findCart === 'undefined')) {
                 return findCart
             } else {
-                return { status: 202, message: 'Carrito no encontrado' }
+                return { status: 404, message: 'Carrito no encontrado' }
             }
         } catch (error) {
             throw error
@@ -155,7 +155,7 @@ class Carts {
             if (!(typeof findCart === 'undefined')) {
                 return findCart.products
             } else {
-                return { status: 202, message: 'Carrito no encontrado' }
+                return { status: 404, message: 'Carrito no encontrado' }
             }
 
         } catch (error) {
@@ -216,9 +216,9 @@ class Carts {
                 })
 
             if (typeof findCart === 'undefined') {
-                return { status: 202, message: 'Carrito no encontrado' }
+                return { status: 404, message: 'Carrito no encontrado' }
             } else if (typeof findProduct === 'undefined') {
-                return { status: 202, message: 'Producto a agregar no encontrado' }
+                return { status: 404, message: 'Producto a agregar no encontrado' }
             } else {
                 return carts
             }
@@ -272,9 +272,9 @@ class Carts {
                 })
 
             if (typeof findCart === 'undefined') {
-                return { status: 202, message: 'Carrito no encontrado' }
+                return { status: 404, message: 'Carrito no encontrado' }
             } else if (typeof findProduct === 'undefined') {
-                return { status: 202, message: 'Producto a eliminar no encontrado' }
+                return { status: 404, message: 'Producto a eliminar no encontrado' }
             } else {
                 return findCart
             }

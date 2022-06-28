@@ -1,7 +1,28 @@
 [
   {
     "id": 1,
-    "timestamp": "2022-06-23T23:30:37.775Z",
-    "products": []
+    "timestamp": "2022-06-28T15:48:39.541Z",
+    "products": [
+      {
+        "name": "Gomitas Mogul",
+        "description": "Gomitas Mogul Frutales Paq 12 Grm",
+        "code": "7790580602000",
+        "picture": "https://static.cotodigital3.com.ar/sitios/fotos/full/00163500/00163570.jpg?3.0.136j",
+        "price": 50.49,
+        "stock": 100,
+        "timestamp": "2022-06-23T23:07:43.664Z",
+        "id": 3
+      },
+      {
+        "name": "Alfajor TOFI",
+        "description": "Alfajor TOFI Chocolate Paquete 46 Gr 1 Unidad",
+        "code": "7790040116610",
+        "picture": "https://static.cotodigital3.com.ar/sitios/fotos/full/00471400/00471474.jpg?3.0.136j",
+        "price": 63.99,
+        "stock": 50,
+        "timestamp": "2022-06-23T23:07:43.664Z",
+        "id": 2
+      }
+    ]
   }
 ]

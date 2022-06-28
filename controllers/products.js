@@ -5,7 +5,11 @@ const products = new Products(process.env.productFilePath)
 exports.get_products = function (req, res) {
     products.getAll()
         .then(response => {
-            res.status(200).json(response)
+            if (typeof response.status === 'undefined') {
+                res.status(200).json(response)
+            } else {
+                res.status(response.status).json(response.message)
+            }
         })
         .catch(error => {
             res.status(500).json(error.message)
@@ -15,7 +19,11 @@ exports.get_products = function (req, res) {
 exports.get_product = function (req, res) {
     products.getById(req.params.id)
         .then(response => {
-            res.status(200).json(response)
+            if (typeof response.status === 'undefined') {
+                res.status(200).json(response)
+            } else {
+                res.status(response.status).json(response.message)
+            }
         })
         .catch(error => {
             res.status(500).json(error.message)
