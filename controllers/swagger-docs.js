@@ -13,7 +13,7 @@ const swaggerOptions = {
         info: {
             title: packageJson.name.toUpperCase(),
             version: packageJson.version,
-            description: `DOCUMENTACION API - ${packageJson.description}`,
+            description: `DOCUMENTACION - ${packageJson.description}`,
             contact: {
                 name: packageJson.author.name,
                 email: packageJson.author.email,

@@ -1,5 +1,7 @@
+const packageJson = require('../package.json');
+
 exports.get_index = function (req, res) {
-    res.render('./pages/index', { title: 'SimCompras - API ' })
+    res.render('./pages/index', { title: packageJson.name.toUpperCase() })
 }
 
 exports.get_no_implemented = function (req, res) {

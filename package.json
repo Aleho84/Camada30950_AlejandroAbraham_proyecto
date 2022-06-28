@@ -1,5 +1,5 @@
 {
-  "name": "simcompras",
+  "name": "simcompras-api",
   "version": "1.0.0",
   "description": "Proyecto Final - Camada 30950 - Alejandro Abraham ",
   "main": "server.js",
